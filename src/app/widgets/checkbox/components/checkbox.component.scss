@@ -51,7 +51,7 @@
         border-color: $color-primary;
         background-color: $color-primary;
 
-        .wrt-checkbox-checkmark-path {
+        .checkbox-checkmark-path {
           stroke-dashoffset: 0;
         }
       }
@@ -60,7 +60,7 @@
     &:focus {
       & ~ .checkbox-frame {
         border-color: $color-primary-accent;
-        box-shadow: $control-default-shadow-faint;
+        box-shadow: $control-default-shadow;
       }
     }
 
@@ -93,7 +93,7 @@
     border-color: $color-gray-500;
   }
 
-  .wrt-checkbox-checkmark-path {
+  .checkbox-checkmark-path {
     stroke: $color-neutral;
     stroke-width: 4px;
     stroke-dasharray: 25px;
@@ -108,7 +108,7 @@
       width: 12px;
     }
 
-    .wrt-checkbox-checkmark-path {
+    .checkbox-checkmark-path {
       stroke-width: 3px;
     }
   }
@@ -121,7 +121,7 @@
       width: 20px;
     }
 
-    .wrt-checkbox-checkmark-path {
+    .checkbox-checkmark-path {
       stroke-width: 5px;
     }
   }

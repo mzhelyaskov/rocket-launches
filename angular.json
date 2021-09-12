@@ -33,6 +33,9 @@
             "styles": [
               "src/scss/styles.scss"
             ],
+            "allowedCommonJsDependencies": [
+              "memoizee"
+            ],
             "scripts": [],
             "stylePreprocessorOptions": {
               "includePaths": ["src/scss"]

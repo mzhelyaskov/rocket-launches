@@ -1,9 +1,9 @@
 <ng-container *ngIf="loaded">
-  <div *ngFor="let launchInfo of launchesPage.results">
-    <app-launch-info [launchInfo]="launchInfo"></app-launch-info>
-  </div>
   <div class="pagination">
     <button class="btn" (click)="onPrevPageClick()"><< PREV</button>
     <button class="btn" (click)="onNextPageClick()">NEXT >></button>
+  </div>
+  <div *ngFor="let launchInfo of launchesPage.results">
+    <app-launch-info [launchInfo]="launchInfo"></app-launch-info>
   </div>
 </ng-container>

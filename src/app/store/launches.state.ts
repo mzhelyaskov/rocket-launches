@@ -31,7 +31,7 @@ export class LaunchesState {
   }
 
   @Action(SetLaunchPageData)
-  activateStep(ctx: StateContext<LaunchesStateModel>, action: SetLaunchPageData) {
+  setLaunches(ctx: StateContext<LaunchesStateModel>, action: SetLaunchPageData) {
     ctx.patchState({launchesPage: action.pageData});
   }
 }

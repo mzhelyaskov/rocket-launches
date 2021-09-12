@@ -1,11 +1,16 @@
 @import "abstracts/colors";
 
 html {
-  font-size: 10rem;
+  font-size: 10px;
 }
 
 body {
   color: $color-base;
   overflow-y: scroll;
   font-size: 1.3rem;
+}
+
+.container {
+  margin: 0 auto;
+  width: 62rem;
 }
