@@ -1,0 +1,12 @@
+@import "abstracts/functions";
+@import "abstracts/colors";
+
+$default-shadow: 1px 1px 2px 0 $color-gray-500;
+$gray-accent-shadow: 5px 5px 10px alpha-transparency($color-dark-darkest, 0.3);
+
+$control-main-shadow: inset 0 1px 1px alpha-transparency(transparent, 0.08);
+$control-error-shadow-faint: inset 0 0 3px alpha-transparency($color-alert, 0.6);
+$control-error-shadow: inset 0 0 5px alpha-transparency($color-alert, 0.6);
+$control-info-shadow: inset 0 0 5px alpha-transparency($color-info, 0.6);
+$control-default-shadow: inset 0 0 5px alpha-transparency($color-primary, 0.6);
+$control-default-shadow-faint: inset 0 0 3px alpha-transparency($color-primary, 0.6);

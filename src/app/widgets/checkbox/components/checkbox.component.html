@@ -1,0 +1,15 @@
+<label class="checkbox-label" [class.disabled]="disabled">
+  <span class="checkbox-inner-container">
+    <input type="checkbox" class="checkbox-input" tabindex="0"
+           [disabled]="disabled"
+           [value]="checked"
+           [checked]="checked"
+           (click)="check()">
+    <span class="checkbox-frame"></span>
+    <span class="checkbox-background">
+      <svg version="1.1" focusable="false" viewBox="0 1 24 24" xml:space="preserve" class="wrt-checkbox-checkmark">
+        <path fill="none" stroke="white" d="M4.1,12.7 9,17.6 20.3,6.3" class="wrt-checkbox-checkmark-path"></path>
+      </svg>
+    </span>
+  </span>
+</label>

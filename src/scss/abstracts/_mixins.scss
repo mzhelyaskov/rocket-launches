@@ -1,0 +1,83 @@
+// sass-lint:disable no-duplicate-properties
+@import "abstracts/colors";
+
+@mixin clearfix() {
+  &::after {
+    clear: both;
+    content: "";
+    display: table;
+  }
+}
+
+@mixin gradient($direction, $color-stops) {
+  background: -webkit-linear-gradient($direction, $color-stops);
+  background: -moz-linear-gradient($direction, $color-stops);
+  background: -o-linear-gradient($direction, $color-stops);
+  background: linear-gradient($direction, $color-stops);
+}
+
+@mixin border-top-radius($radius) {
+  border-top-right-radius: $radius;
+  border-top-left-radius: $radius;
+}
+
+@mixin border-right-radius($radius) {
+  border-bottom-right-radius: $radius;
+  border-top-right-radius: $radius;
+}
+
+@mixin border-bottom-radius($radius) {
+  border-bottom-right-radius: $radius;
+  border-bottom-left-radius: $radius;
+}
+
+@mixin border-left-radius($radius) {
+  border-bottom-left-radius: $radius;
+  border-top-left-radius: $radius;
+}
+
+@mixin border-radius($radius) {
+  @include border-top-radius($radius);
+  @include border-right-radius($radius);
+  @include border-bottom-radius($radius);
+  @include border-left-radius($radius);
+}
+
+@mixin clickable-icon() {
+  opacity: 0.9;
+
+  &:hover {
+    text-shadow: 1px 1px 1px $color-gray-light;
+    opacity: 1;
+  }
+
+  &:active {
+    text-shadow: 1px 1px $color-neutral-lightest, -1px 0 1px $color-gray-light;
+  }
+}
+
+@mixin hide-vertical-scrollbar-buttons() {
+  &::-webkit-scrollbar-button {
+    &:vertical {
+      &:start {
+        &:increment {
+          display: none;
+        }
+      }
+
+      &:end {
+        &:decrement {
+          display: none;
+        }
+      }
+
+      &:decrement {
+        display: none;
+      }
+
+      &:increment {
+        display: none;
+      }
+    }
+  }
+}

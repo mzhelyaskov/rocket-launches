@@ -1,0 +1,21 @@
+<div class="launch">
+  <section class="launch__section">
+    <h1 class="launch__label">Date</h1>
+    <div class="launch__data">{{launchInfo.window_start | date: 'yyyy-MM-dd HH:mm'}}</div>
+  </section>
+
+  <section class="launch__section">
+    <h1 class="launch__label">Mission</h1>
+    <div class="launch__data">{{launchInfo.mission?.name || '----'}}</div>
+  </section>
+
+  <section class="launch__section">
+    <h1 class="launch__label">Launch location</h1>
+    <div class="launch__data">{{launchInfo.pad?.location?.name || '----'}}</div>
+  </section>
+
+  <section class="launch__section">
+    <h1 class="launch__label">Pad name</h1>
+    <div class="launch__data">{{launchInfo.pad?.name || '----'}}</div>
+  </section>
+</div>

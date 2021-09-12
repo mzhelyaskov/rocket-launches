@@ -1,0 +1,6 @@
+<div class="control">
+  <ng-content select="[icon]"></ng-content>
+  <input #input class="control__input" type="text" autocomplete="off" required [readonly]="true"
+         [name]="name" [value]="value" (input)="onInput(input.value)"/>
+  <ng-content select="[load-icon]"></ng-content>
+</div>

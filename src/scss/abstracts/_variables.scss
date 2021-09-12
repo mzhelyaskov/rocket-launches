@@ -1,0 +1,61 @@
+//--- Bootstrap overrides
+$font-size-base: 13px;
+$input-height-base: 33px;
+$padding-base-vertical: 6px;
+$border-radius-base: 4px;
+$padding-large-vertical: 10px;
+$padding-small-vertical: 5px;
+$grid-gutter-width: 30px;
+$border-radius-base: 0.5rem;
+$form-group-margin-bottom: 0.8rem;
+$line-height-base: 1.428571429;
+$padding-base-horizontal: 1.2rem;
+$padding-large-horizontal: 1.6rem;
+$padding-small-horizontal: 1rem;
+$padding-xs-vertical: 0.1rem;
+$padding-xs-horizontal: 0.5rem;
+$border-radius-base: 0.4rem;
+$border-radius-large: 0.6rem;
+$border-radius-small: 0.3rem;
+$caret-width-base: 0.4rem;
+$caret-width-large: 0.5rem;
+$table-cell-padding: 0.8rem;
+$table-condensed-cell-padding: 0.5rem;
+
+//--- Custom
+$default-container-padding: floor(($grid-gutter-width / 2));
+$pixels-in-rem: 10;
+
+//--- Typography
+$font-family-sans-serif: "Open Sans", sans-serif;
+$font-size-default: 1.3rem;
+$font-size-title: 1.7rem;
+$line-height-base: 1.5;
+$font-weight-normal: normal;
+$font-weight-semi-bold: 600;
+$font-weight-bold: bold;
+
+//--- Paths config
+$context-path: "/property-fleet";
+$assets-path: "#{$context-path}/assets";
+$fonts-path: "#{$assets-path}/fonts";
+$fa-font-path: "#{$fonts-path}/fontawesome";
+$images-path: "#{$assets-path}/images";
+
+//--- Z-index layers
+$z-index: (
+  bottom: 0,
+  level_010: 100,
+  level_040: 400,
+  level_050: 500,
+  level_090: 900,
+  level_100: 1000,
+  level_110: 1100,
+  top: 999999999
+);
+
+//--- Media queries breakpoints
+$screen-xs-min: 0;
+$screen-sm-min: 0;
+$screen-md-min: 992px;
+$screen-lg-min: 1200px;

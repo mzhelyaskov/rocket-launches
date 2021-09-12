@@ -14,17 +14,24 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
+    "strictNullChecks": false,
     "target": "es2017",
     "module": "es2020",
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@@app/*": ["src/app/*"],
+      "@@core/*": ["src/app/core/*"],
+      "@@shared/*": ["src/app/shared/*"],
+      "@@widgets/*": ["src/app/widgets/*"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
-    "strictInjectionParameters": true,
-    "strictInputAccessModifiers": true,
-    "strictTemplates": true
+    "strictInjectionParameters": false,
+    "strictInputAccessModifiers": false,
+    "strictTemplates": false
   }
 }

@@ -1,0 +1,15 @@
+@import "abstracts/colors";
+
+$primary-gradient-stops: $color-primary-dark 0%, $color-primary-light 25%, $color-primary-light-contrast 75%, $color-primary-dark 100%;
+$base-gradient-stops: $color-neutral 0%, $color-neutral-lightest 25%, $color-neutral-lightest 75%, $color-neutral 100%;
+$light-gradient-stops: $color-neutral-lightest 0%, $color-neutral 100%;
+$lightest-gradient-stops: $color-neutral-lightest-transparent 0%, $color-neutral-lightest 35%, $color-neutral-lightest 40%, $color-neutral-lightest 100%;
+$dark-gradient-stops:  $color-neutral-dark, $color-spacer 40%, $color-neutral-light, $color-neutral-dark 98%
+
+// TODO for migration purpose. Remove after migration
+//$gradient-tail: radial-gradient(circle, $color-neutral 60%, $color-gray-lighten 90%);
+//$abstract-gradient-distinction: linear-gradient(180deg, $gradient-stops-light);
+//$abstract-gradient-distinction-triple--hover: linear-gradient(to bottom, $primary-gradient-stops);
+//.abstract-gradient-distinction-triple {
+//  background: linear-gradient(to bottom, #f0f0f0 0%, #fff 25%, #fff 75%, #f0f0f0 100%);
+//}

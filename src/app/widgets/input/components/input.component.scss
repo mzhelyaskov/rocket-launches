@@ -1,0 +1,16 @@
+@import "abstracts/colors";
+
+$input-height: 22px;
+
+.control {
+  position: relative;
+  overflow: hidden;
+
+  &__input {
+    width: 100%;
+    height: $input-height;
+    padding-top: 18px;
+    border: none;
+    outline: none;
+  }
+}
