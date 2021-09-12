@@ -31,7 +31,7 @@ export class LaunchInfoListComponents implements OnInit, OnDestroy {
     this.launchesInfoService.fetchFirstUpcomingLaunchesPage$().subscribe();
 
     this.launchesStateFacade.state$
-      .pipe(filter(s => Boolean(s)), takeUntil(this.unsubscribe$))
+      .pipe(filter(s => Boolean(s.launchesPage)), takeUntil(this.unsubscribe$))
       .subscribe((state: LaunchesStateModel) => {
         this.loaded = true;
         this.launchesSearchCriteria = state.launchesSearchCriteria;

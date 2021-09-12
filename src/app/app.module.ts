@@ -12,6 +12,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {LaunchInfoListComponents} from '@@app/components/launch-info-list/launch-info-list.component';
 import {NgxsModule, NoopNgxsExecutionStrategy} from '@ngxs/store';
 import {environment} from '../environments/environment';
+import {LaunchesState} from '@@app/store/launches.state';
 
 @NgModule({
   imports: [
@@ -21,7 +22,7 @@ import {environment} from '../environments/environment';
     InputWidgetModule,
     HttpClientModule,
     MultiSelectDropdownWidgetModule,
-    NgxsModule.forRoot([], {
+    NgxsModule.forRoot([LaunchesState], {
       developmentMode: !environment.production,
       selectorOptions: {
         suppressErrors: false,
