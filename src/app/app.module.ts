@@ -21,6 +21,7 @@ import {LaunchesState} from '@@app/store/launches.state';
     AppSharedModule,
     InputWidgetModule,
     HttpClientModule,
+
     MultiSelectDropdownWidgetModule,
     NgxsModule.forRoot([LaunchesState], {
       developmentMode: !environment.production,

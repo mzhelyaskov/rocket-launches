@@ -9,8 +9,17 @@ $input-height: 22px;
   &__input {
     width: 100%;
     height: $input-height;
-    padding-top: 18px;
     border: none;
     outline: none;
+  }
+
+  &__prefix-icon {
+    position: absolute;
+    left: 3px;
+    top: 5px;
+
+    & + .control__input {
+      padding-left: 2rem;
+    }
   }
 }

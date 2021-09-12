@@ -9,8 +9,15 @@ import {FormControl} from '@angular/forms';
 export class AppComponent {
 
   public control: FormControl;
+  public launchLocationFilterOpen: boolean;
 
   constructor() {
     this.control = new FormControl(null);
+  }
+
+  onSelectedItemsChange() {}
+
+  openLaunchLocationsFilter() {
+    this.launchLocationFilterOpen = true;
   }
 }

@@ -1,5 +1,6 @@
-import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ContentChild, Input, OnInit} from '@angular/core';
 import {ControlValueAccessor, NgControl} from '@angular/forms';
+import {InputPrefixIconDirective} from '@@widgets/input/directives/input-prefix-icons.directives';
 
 @Component({
   selector: 'app-input',
@@ -9,6 +10,8 @@ import {ControlValueAccessor, NgControl} from '@angular/forms';
 })
 export class InputComponent implements ControlValueAccessor, OnInit {
 
+  @ContentChild('appPrefixIcon') inputPrefixIcon: InputPrefixIconDirective;
+
   private onChange: (value: string) => void;
   private onTouch: () => void;
 
@@ -16,13 +19,16 @@ export class InputComponent implements ControlValueAccessor, OnInit {
 
   @Input() name: string;
   @Input() label: string;
-  @Input() icon: string;
 
   constructor(private ngControl: NgControl) {
     ngControl.valueAccessor = this;
     this.onChange = () => {};
     this.onTouch = () => {};
     this.value = null;
+  }
+
+  get prefixIcon(): boolean {
+    return Boolean(this.inputPrefixIcon);
   }
 
   ngOnInit(): void {

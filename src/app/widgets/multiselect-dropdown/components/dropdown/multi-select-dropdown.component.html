@@ -1,19 +1,23 @@
 <div class="multi-select-dropdown">
-  <app-input>
-    <fa-icon icon [icon]="faCoffee"></fa-icon>
-    <fa-icon *ngIf="!loaded" load-icon [icon]="faCoffee"></fa-icon>
-  </app-input>
-  <ng-container *ngIf="loaded">
-    <div class="multi-select-dropdown__items-container">
-      <div *ngFor="let item in items">
-        <app-checkbox [(ngModel)]="item.selected"></app-checkbox>
-        <div class="multi-select-dropdown__item-label">{{item.label}}</div>
+  <div class="dropdown-label" (click)="onOpenClick()">
+    <span class="label">{{toggleLabel}}</span>
+  </div>
+  <div class="dropdown" *ngIf="visible">
+    <app-input [formControl]="searchInputControl">
+      <fa-icon appPrefixIcon [icon]="faSearch"></fa-icon>
+    </app-input>
+    <ng-container *ngIf="loaded">
+      <div class="multi-select-dropdown__items-container">
+        <div *ngFor="let item in items">
+          <app-checkbox [(ngModel)]="item.selected"></app-checkbox>
+          <div class="multi-select-dropdown__item-label">{{item.label}}</div>
+        </div>
       </div>
+    </ng-container>
+    <div class="multi-select-dropdown__actions">
+      <button class="btn btn-label" [disabled]="!loaded" (click)="onRestClick()">Reset</button>
+      <button class="btn btn-primary" [disabled]="!loaded" (click)="onSaveClick()">Save</button>
     </div>
-  </ng-container>
-  <div class="multi-select-dropdown__actions">
-    <button class="btn btn-label" [disabled]="!loaded" (click)="onRestClick()">Reset</button>
-    <button class="btn btn-primary" [disabled]="!loaded" (click)="onSaveClick()">Save</button>
   </div>
 </div>
 
