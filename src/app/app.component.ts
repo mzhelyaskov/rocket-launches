@@ -6,8 +6,6 @@ import {LaunchesStateFacade} from '@@app/store/launches-state.facade';
 import {exhaustMap, filter, takeUntil} from 'rxjs/operators';
 import {LaunchesStateModel} from '@@shared/models/launches-state-model';
 import {Subject} from 'rxjs';
-import {DropdownListItem} from '@@widgets/multiselect-dropdown/models/dropdown-list-item';
-import {SelectedDropdownItemsCodes} from '@@widgets/multiselect-dropdown/models/selected-dropdown-items-codes';
 
 @Component({
   selector: 'app-root',
@@ -23,7 +21,6 @@ export class AppComponent implements OnInit, OnDestroy {
   public totalItems: number;
   public currentPageNumber: number;
   public loaded: boolean;
-  public selectedItemCodes: SelectedDropdownItemsCodes;
 
   constructor(private launchesInfoService: LaunchesInfoService,
               private launchesStateFacade: LaunchesStateFacade,
@@ -45,8 +42,8 @@ export class AppComponent implements OnInit, OnDestroy {
       });
   }
 
-  onSelectedItemsChange(launchLocationName: string) {
-    const criteria: LaunchesPageCriteria = {launchLocationName};
+  onSelectedItemsChange(locationCodes: string[]) {
+    const criteria: LaunchesPageCriteria = {locationCodes};
     this.launchesStateFacade.updateLaunchesPageCriteriaParams$(criteria)
       .pipe(exhaustMap(() => this.launchesInfoService.fetchUpcomingLaunchesPage$()))
       .subscribe();

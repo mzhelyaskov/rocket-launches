@@ -1,6 +1,6 @@
 export interface LaunchesPageCriteria {
   offset?: number;
   limit?: number;
-  launchLocationName?: string;
+  locationCodes?: string[];
   ordering?: string;
 }

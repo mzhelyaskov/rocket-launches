@@ -4,12 +4,12 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  HostListener,
   Inject,
   Input,
   OnDestroy,
   OnInit,
-  Output,
-  ViewChild
+  Output
 } from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 import {faSearch, faSpinner, faTruckLoading} from '@fortawesome/free-solid-svg-icons';
@@ -29,12 +29,8 @@ import {CollectionUtils} from '@@core/utils/collection.utils';
 })
 export class MultiSelectDropdownComponent implements OnInit, OnDestroy {
 
-  @ViewChild('scrollFrame', {static: false}) scrollFrame: ElementRef;
-
   private unsubscribe$: Subject<void>;
-  private selectedListItems: { [key: string]: DropdownListItem };
 
-  public value: string;
   public faSearch: any;
   public faAngleDown: any;
   public faSpinner: any;
@@ -43,36 +39,44 @@ export class MultiSelectDropdownComponent implements OnInit, OnDestroy {
   public dropdownVisible: boolean;
   public searchInputControl: FormControl;
   public items: DropdownListItem[];
-  public selectedItem: DropdownListItem;
+  public itemCodeToSelectionFlag: { [key: string]: boolean };
   public loaded: boolean;
   public loading$: Observable<boolean>;
 
   @Input() toggleLabel: boolean;
 
-  @Output() changed: EventEmitter<string>;
+  @Output() changed: EventEmitter<string[]>;
+
+  @HostListener('document:click', ['$event']) closeIfOnOutsideClick(event: Event) {
+    if (!this.elementRef.nativeElement.contains(event.target)) {
+      this.closeDropdown();
+    }
+  }
 
   constructor(@Inject(MULTI_SELECT_DROPDOWN_DATA_SERVICE) private dataService: MultiSelectDropdownDataService,
               private elementRef: ElementRef,
               private cdr: ChangeDetectorRef) {
     this.unsubscribe$ = new Subject<void>();
     this.searchInputControl = new FormControl(null);
-    this.value = null;
     this.faSearch = faSearch;
     this.faSpinner = faSpinner;
     this.faAngleDown = faAngleDown;
     this.faTruckLoading = faTruckLoading;
-    this.changed = new EventEmitter<string>();
-    this.selectedListItems = {};
+    this.changed = new EventEmitter<string[]>();
     this.loading$ = dataService.loading$.asObservable();
+    this.itemCodeToSelectionFlag = {};
+  }
+
+  get searchQuery(): string {
+    return this.searchInputControl.value;
   }
 
   ngOnInit(): void {
-    this.dataService.itemsSource$
+    this.dataService.getItems$()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((items: DropdownListItem[]) => {
         this.items = items.map(i => ({...i}));
-        const namePart = this.searchInputControl.value;
-        this.updateDisplayItems(namePart, 'SOURCE change');
+        this.updateDisplayItems(this.searchQuery);
         if (CollectionUtils.isNotEmpty(this.items)) {
           this.loaded = true;
         }
@@ -81,29 +85,34 @@ export class MultiSelectDropdownComponent implements OnInit, OnDestroy {
 
     this.searchInputControl.valueChanges
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((namePart: string) => {
-        this.updateDisplayItems(namePart, 'search INPUT change');
+      .subscribe((searchQuery: string) => {
+        this.updateDisplayItems(searchQuery);
         this.cdr.detectChanges();
       });
   }
 
-  isSelected(item: DropdownListItem): boolean {
-    return this.selectedItem?.code === item.code;
+  onSelectionChange(checked: boolean, item: DropdownListItem) {
+    if (checked) {
+      this.itemCodeToSelectionFlag[item.code] = true;
+    } else {
+      delete this.itemCodeToSelectionFlag[item.code];
+    }
   }
 
-  onSelectionChange(item: DropdownListItem) {
-    this.selectedItem = item;
+  onLabelClick(item: DropdownListItem) {
+    const checked = Boolean(this.itemCodeToSelectionFlag[item.code]);
+    this.onSelectionChange(!checked, item);
   }
 
   onRestClick() {
     this.searchInputControl.reset();
-    this.selectedItem = null;
+    this.itemCodeToSelectionFlag = {};
     this.displayItems = this.items;
   }
 
   onSaveClick() {
     this.searchInputControl.reset();
-    this.changed.emit(this.selectedItem?.label || '');
+    this.changed.emit(this.getSelectedLocationCodes());
     this.closeDropdown();
   }
 
@@ -111,39 +120,25 @@ export class MultiSelectDropdownComponent implements OnInit, OnDestroy {
     this.dropdownVisible = true;
   }
 
+  trackByDisplayItem(index: number, item: DropdownListItem): string {
+    return item.code;
+  }
+
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
 
-  scrolled(): void {
-    if (this.isUserNearBottom() && !this.searchInputControl.value) {
-      this.loadNextItemsPart('scroll');
-    }
-  }
-
-  private updateDisplayItems(namePart: string, reason: string) {
-    console.log('UPDATE REASON', reason);
+  private updateDisplayItems(namePart: string) {
     if (namePart) {
       this.displayItems = this.items.filter(MultiSelectDropdownComponent.namePartPredicate(namePart));
-      if (CollectionUtils.isEmpty(this.displayItems)) {
-        console.log('after', namePart);
-        this.loadNextItemsPart('empty DISPLAY items');
-      }
     } else {
       this.displayItems = this.items;
-      if (CollectionUtils.isEmpty(this.items)) {
-        this.loadNextItemsPart('empty INITIAL items');
-      }
     }
   }
 
-  private loadNextItemsPart(reason: string) {
-    console.log('REASON:', reason);
-    if (!this.dataService.loading$.getValue()) {
-      console.log('fetchNextPageItems$');
-      this.dataService.fetchNextPageItems$();
-    }
+  private getSelectedLocationCodes() {
+    return this.items.filter(i => this.itemCodeToSelectionFlag[i.code]).map(i => i.code);
   }
 
   private closeDropdown() {
@@ -155,13 +150,5 @@ export class MultiSelectDropdownComponent implements OnInit, OnDestroy {
 
   private static namePartPredicate(namePart: string): (i: DropdownListItem) => boolean {
     return i => i.label.toLowerCase().includes((namePart || '').toLowerCase());
-  }
-
-  private isUserNearBottom(): boolean {
-    const scrollContainer = this.scrollFrame.nativeElement;
-    const threshold = 10;
-    const position = scrollContainer.scrollTop + scrollContainer.offsetHeight;
-    const height = scrollContainer.scrollHeight;
-    return position > height - threshold;
   }
 }

@@ -26,6 +26,7 @@ export class InputComponent implements ControlValueAccessor, OnInit, AfterViewIn
   private _onTouch: () => void;
   private _value: string;
 
+  @Input() placeholder: string;
   @Input() name: string;
   @Input() label: string;
 

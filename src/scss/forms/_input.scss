@@ -1,0 +1,6 @@
+@import "abstracts/colors";
+
+::placeholder {
+  color: $color-gray-500;
+  opacity: 1;
+}

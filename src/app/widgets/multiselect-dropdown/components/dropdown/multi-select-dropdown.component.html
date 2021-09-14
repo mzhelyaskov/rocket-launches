@@ -2,16 +2,15 @@
   <div class="dropdown__open-label" (click)="onOpenClick()">
     <span class="label">{{toggleLabel}}</span>
     <fa-icon class="dropdown__label-icon" [icon]="faAngleDown"></fa-icon>
-    <div class="dropdown__list" *ngIf="dropdownVisible">
-      <app-input class="dropdown__input" [formControl]="searchInputControl">
+    <div class="dropdown__list" [class.invisible]="!dropdownVisible">
+      <app-input class="dropdown__input" placeholder="Type to search" [formControl]="searchInputControl">
         <fa-icon class="dropdown__input-icon" appPrefixIcon [icon]="faSearch"></fa-icon>
       </app-input>
-      <div #scrollFrame class="dropdown__items-container" (scroll)="scrolled()">
+      <div class="dropdown__items-container">
         <ng-container *ngIf="loaded">
-          <div *ngFor="let item of displayItems" class="dropdown__item">
-            <app-checkbox class="dropdown__item-checkbox" ngModel
-                          [checked]="isSelected(item)" (ngModelChange)="onSelectionChange(item)"></app-checkbox>
-            <div class="dropdown__item-label" (click)="onSelectionChange(item)">{{item.label}}</div>
+          <div *ngFor="let item of displayItems; trackBy: trackByDisplayItem" class="dropdown__item">
+            <app-checkbox class="dropdown__item-checkbox" [ngModel]="itemCodeToSelectionFlag[item.code]" (ngModelChange)="onSelectionChange($event, item)"></app-checkbox>
+            <div class="dropdown__item-label" (click)="onLabelClick(item)">{{item.label}}</div>
           </div>
         </ng-container>
         <fa-icon [class.invisible]="!(loading$ | async)" [icon]="faSpinner" [spin]="true"></fa-icon>
