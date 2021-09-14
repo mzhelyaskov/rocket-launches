@@ -18,7 +18,6 @@ import {LaunchLocationsPage} from '@@shared/models/launch-locations-page';
 export class LaunchesStateFacade {
 
   @Select(LAUNCHES_STATE_TOKEN) public state$: Observable<LaunchesStateModel>;
-  @Select(LaunchesState.launchesPage) public launchesPage: Observable<LaunchesPage>;
   @Select(LaunchesState.launchLocations) public launchLocations$: Observable<LaunchLocation[]>;
 
   constructor(private store: Store) {}
@@ -49,9 +48,5 @@ export class LaunchesStateFacade {
 
   getLastLaunchesLocationsPage(): LaunchLocationsPage {
     return this.state.lastLoadedLocationPage;
-  }
-
-  getLaunchLocations(): LaunchLocation[] {
-    return this.state.locations;
   }
 }

@@ -32,11 +32,6 @@ const initialState: LaunchesStateModel = {
 export class LaunchesState {
 
   @Selector()
-  static launchesPage(state: LaunchesStateModel): LaunchesPage {
-    return state.launchesPage;
-  }
-
-  @Selector()
   static launchLocations(state: LaunchesStateModel): LaunchLocation[] {
     return state.locations;
   }
