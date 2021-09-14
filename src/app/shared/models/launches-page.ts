@@ -1,6 +1,6 @@
 import {LaunchInfo} from '@@shared/models/launch-info';
 
-export interface LaunchesPageData {
+export interface LaunchesPage {
   count: number;
   next: string;
   previous: string;

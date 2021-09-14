@@ -1,6 +1,14 @@
 <div class="container">
-  <div class="launches-filter">
-    <app-multi-select-dropdown toggleLabel="Launch location" (changed)="onSelectedItemsChange()"></app-multi-select-dropdown>
-  </div>
-  <app-launch-info-list></app-launch-info-list>
+  <section class="search-criteria">
+    <div class="launches-filter">
+      <app-multi-select-dropdown toggleLabel="Launch location" (changed)="onSelectedItemsChange($event)"></app-multi-select-dropdown>
+    </div>
+    <app-pagination class="launches-pagination"
+                    [totalItems]="totalItems"
+                    [itemsPerPage]="itemsPerPage"
+                    [ngModel]="currentPageNumber"
+                    (ngModelChange)="onPageNumberChange($event)">
+    </app-pagination>
+  </section>
+  <app-launch-info-list [itemsPerPage]="itemsPerPage"></app-launch-info-list>
 </div>

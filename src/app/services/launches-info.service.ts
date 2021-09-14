@@ -1,10 +1,12 @@
 import {Injectable} from '@angular/core';
 import {LaunchesRestService} from '@@app/rest/launches-rest.service';
-import {Observable} from 'rxjs';
-import {exhaustMap, mapTo} from 'rxjs/operators';
+import {EMPTY, Observable} from 'rxjs';
+import {delay, exhaustMap, mapTo} from 'rxjs/operators';
 import {LaunchesStateFacade} from '@@app/store/launches-state.facade';
-import {LaunchesPageData} from '@@shared/models/launches-page-data';
-import {LaunchesSearchCriteria} from '@@shared/models/launches-search-criteria';
+import {LaunchesPage} from '@@shared/models/launches-page';
+import {LaunchesPageCriteria} from '@@shared/models/launches-page-criteria';
+import {LaunchLocationsPage} from '@@shared/models/launch-locations-page';
+import {ApiUrlConfig} from '@@app/config/api-url.config';
 
 @Injectable({providedIn: 'root'})
 export class LaunchesInfoService {
@@ -13,26 +15,24 @@ export class LaunchesInfoService {
               private launchesStateFacade: LaunchesStateFacade) {
   }
 
-  fetchNextUpcomingLaunchesPage$(): Observable<LaunchesPageData> {
-    const url = this.launchesStateFacade.getNextPageUrl();
-    const criteria: LaunchesSearchCriteria = {url};
-    return this.getLaunches$(criteria);
+  fetchUpcomingLaunchesPage$(): Observable<LaunchesPage> {
+    const criteria: LaunchesPageCriteria = this.launchesStateFacade.getLaunchesPageCriteria();
+    return this.launchesRestService.upcomingLaunchesPage$(criteria).pipe(
+      exhaustMap((pd: LaunchesPage) => this.launchesStateFacade.setLaunches$(pd).pipe(mapTo(pd)))
+    )
   }
 
-  fetchFirstUpcomingLaunchesPage$(): Observable<LaunchesPageData> {
-    return this.getLaunches$();
-  }
-
-  fetchPrevUpcomingLaunchesPage$(): Observable<LaunchesPageData> {
-    const url = this.launchesStateFacade.getPreviousPageUrl();
-    const criteria: LaunchesSearchCriteria = {url};
-    return this.getLaunches$(criteria);
-  }
-
-  private getLaunches$(criteria?: LaunchesSearchCriteria): Observable<LaunchesPageData> {
-    return this.launchesRestService.upcomingLaunches$(criteria).pipe(
-      exhaustMap((pageData: LaunchesPageData) => {
-        return this.launchesStateFacade.setLaunches$(pageData).pipe(mapTo(pageData));
+  fetchNextLaunchLocationPage$(): Observable<LaunchLocationsPage> {
+    const page: LaunchLocationsPage = this.launchesStateFacade.getLastLaunchesLocationsPage();
+    let url = ApiUrlConfig.LAUNCH_LOCATIONS_INITIAL_URL;
+    if (page && page.next) {
+      url = page.next;
+    }
+    console.log('fetch:', url);
+    return this.launchesRestService.getNextLaunchLocationsPage$(url).pipe(
+      exhaustMap((page: LaunchLocationsPage) => {
+        this.launchesStateFacade.setLastLoadedLaunchLocationPage$(page);
+        return this.launchesStateFacade.addLaunchLocations$(page.results).pipe(mapTo(page), delay(6000));
       })
     );
   }

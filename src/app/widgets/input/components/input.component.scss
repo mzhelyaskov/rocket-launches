@@ -11,12 +11,13 @@ $input-height: 22px;
     height: $input-height;
     border: none;
     outline: none;
+    color: $color-base;
   }
 
   &__prefix-icon {
     position: absolute;
     left: 3px;
-    top: 5px;
+    top: 0;
 
     & + .control__input {
       padding-left: 2rem;

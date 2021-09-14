@@ -1,7 +1,7 @@
 export class CollectionUtils {
 
   static isEmpty(arr: any): boolean {
-    return arr ? Boolean(arr.length) : false;
+    return arr ? !arr.length : true;
   }
 
   static isNotEmpty(value: any): boolean {

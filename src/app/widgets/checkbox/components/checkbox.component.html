@@ -1,10 +1,6 @@
-<label class="checkbox-label" [class.disabled]="disabled">
+<label class="checkbox-label">
   <span class="checkbox-inner-container">
-    <input type="checkbox" class="checkbox-input" tabindex="0"
-           [disabled]="disabled"
-           [value]="checked"
-           [checked]="checked"
-           (click)="check()">
+    <input #checkbox type="checkbox" class="checkbox-input" tabindex="0" (click)="check()">
     <span class="checkbox-frame"></span>
     <span class="checkbox-background">
       <svg version="1.1" focusable="false" viewBox="0 1 24 24" xml:space="preserve" class="checkbox-checkmark">

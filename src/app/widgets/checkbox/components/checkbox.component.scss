@@ -3,6 +3,7 @@
 @import "abstracts/variables";
 
 .checkbox-label {
+  line-height: 1;
   margin-bottom: -3px;
 
   &:hover {
@@ -28,15 +29,15 @@
     display: inline-block;
     position: relative;
     top: -1px;
-    height: 16px;
-    width: 16px;
+    height: 13px;
+    width: 13px;
     vertical-align: middle;
     flex-shrink: 0;
   }
 
   .checkbox-input {
-    left: 20px;
     opacity: 0;
+    margin: 0;
     cursor: pointer;
 
     &:checked {
@@ -79,7 +80,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    border-radius: 3px;
+    border-radius: 1px;
     box-sizing: border-box;
     pointer-events: none;
   }
@@ -95,34 +96,8 @@
 
   .checkbox-checkmark-path {
     stroke: $color-neutral;
-    stroke-width: 4px;
+    stroke-width: 3px;
     stroke-dasharray: 25px;
     stroke-dashoffset: 25px;
-  }
-
-  &.sm {
-    font-size: 12px;
-
-    .checkbox-inner-container {
-      height: 12px;
-      width: 12px;
-    }
-
-    .checkbox-checkmark-path {
-      stroke-width: 3px;
-    }
-  }
-
-  &.lg {
-    font-size: 20px;
-
-    .checkbox-inner-container {
-      height: 20px;
-      width: 20px;
-    }
-
-    .checkbox-checkmark-path {
-      stroke-width: 5px;
-    }
   }
 }

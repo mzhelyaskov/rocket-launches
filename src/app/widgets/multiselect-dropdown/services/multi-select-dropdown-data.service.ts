@@ -1,7 +1,11 @@
-import {Observable} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
 import {DropdownListItem} from '@@widgets/multiselect-dropdown/models/dropdown-list-item';
 
 export interface MultiSelectDropdownDataService {
 
-  getDropdownItems$(): Observable<DropdownListItem[]>;
+  loading$: BehaviorSubject<boolean>;
+
+  itemsSource$: BehaviorSubject<DropdownListItem[]>;
+
+  fetchNextPageItems$(): void;
 }

@@ -36,21 +36,13 @@ $font-weight-semi-bold: 600;
 $font-weight-bold: bold;
 
 //--- Paths config
-$context-path: "/property-fleet";
-$assets-path: "#{$context-path}/assets";
+$assets-path: "/assets";
 $fonts-path: "#{$assets-path}/fonts";
-$fa-font-path: "#{$fonts-path}/fontawesome";
-$images-path: "#{$assets-path}/images";
 
 //--- Z-index layers
 $z-index: (
   bottom: 0,
-  level_010: 100,
-  level_040: 400,
-  level_050: 500,
-  level_090: 900,
   level_100: 1000,
-  level_110: 1100,
   top: 999999999
 );
 

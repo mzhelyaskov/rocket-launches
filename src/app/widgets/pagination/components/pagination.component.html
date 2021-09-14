@@ -1,0 +1,8 @@
+<ul class="pagination">
+  <li *ngFor="let page of pages" [class.active]="page.active" class="pagination__page" (click)="selectPage(page.number, $event)">
+    <span>{{page.number}}</span>
+  </li>
+  <li *ngIf="pageNumber <= totalPages" class="pagination__page">
+    <span>...</span>
+  </li>
+</ul>

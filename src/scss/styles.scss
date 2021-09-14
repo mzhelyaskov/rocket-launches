@@ -1,1 +1,15 @@
+//=== Vendors
+@import '~ngx-toastr/toastr';
+
+//=== Utils
+@import "utils/utilities";
+
+//=== Global
 @import "global/common";
+@import "global/typography";
+
+//=== Components
+@import "components/buttons";
+@import "components/scrollbar";
+@import "components/toasters";
+@import "components/view-locker";

@@ -1,8 +1,11 @@
-import {LaunchesSearchCriteria} from '@@shared/models/launches-search-criteria';
-import {LaunchesPageData} from '@@shared/models/launches-page-data';
+import {LaunchesPageCriteria} from '@@shared/models/launches-page-criteria';
+import {LaunchesPage} from '@@shared/models/launches-page';
+import {LaunchLocation} from '@@shared/models/launch-location';
+import {LaunchLocationsPage} from '@@shared/models/launch-locations-page';
 
 export interface LaunchesStateModel {
-  launchesPageNumber: number;
-  launchesSearchCriteria: LaunchesSearchCriteria;
-  launchesPage: LaunchesPageData;
+  lastLoadedLocationPage: LaunchLocationsPage;
+  locations: LaunchLocation[];
+  launchesPageCriteria: LaunchesPageCriteria;
+  launchesPage: LaunchesPage;
 }

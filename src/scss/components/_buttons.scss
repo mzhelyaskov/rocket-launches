@@ -1,0 +1,60 @@
+@import "abstracts/colors";
+@import "abstracts/mixins";
+@import "abstracts/functions";
+
+$btn-tertiary-padding: 0.2rem 0.8rem;
+$btn-radius: 4px;
+$btn-box-shadow: 0 0 4px 0 $color-gray-500;
+$btn-primary-disabled-background: rgba($color-primary, 0.65);
+$color-btn-border: #e5e5e5;
+$color-btn-secondary-disabled: rgba($color-base, 0.65);
+
+.btn {
+  min-height: 2.4rem;
+  border: 0;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  line-height: 1.4rem;
+  padding: 0.3rem 1.1rem;
+  vertical-align: text-top;
+  position: relative;
+}
+
+.btn-label {
+  color: $color-base;
+  background-color: transparent;
+
+  &:hover {
+    color: $color-gray-700;
+  }
+
+  &[disabled] {
+    cursor: not-allowed;
+    color: alpha-transparency($color-base, 0.7);
+
+    &:hover {
+      color: alpha-transparency($color-base, 0.7);
+    }
+  }
+}
+
+.btn-primary {
+  background-color: $color-primary;
+  color: $color-neutral;
+  box-shadow: 0 0 4px 0 $color-gray-100;
+
+  &:hover {
+    background-color: $color-primary-accent;
+  }
+
+  &[disabled] {
+    cursor: not-allowed;
+    background-color: alpha-transparency($color-primary, 0.7);
+
+    &:hover {
+      background-color: alpha-transparency($color-primary, 0.7);
+    }
+  }
+}

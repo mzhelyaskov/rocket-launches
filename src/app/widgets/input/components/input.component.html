@@ -1,7 +1,7 @@
 <div class="control">
   <ng-container *ngTemplateOutlet="prefixIcon"></ng-container>
-  <input #input class="control__input" type="text" autocomplete="off" required
-         [name]="name" [value]="value" (input)="onInput(input.value)"/>
+  <input #input class="control__input" type="text" autocomplete="off"
+         [name]="name" (input)="onInput(input.value)"/>
 </div>
 
 <ng-template #prefixIcon>

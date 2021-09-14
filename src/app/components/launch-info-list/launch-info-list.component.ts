@@ -1,12 +1,11 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {LaunchesInfoService} from '@@app/services/launches-info.service';
 import {LaunchesStateFacade} from '@@app/store/launches-state.facade';
 import {filter, takeUntil} from 'rxjs/operators';
-import {CollectionUtils} from '@@widgets/multiselect-dropdown/utils/collection.utils';
 import {Subject} from 'rxjs';
-import {LaunchesPageData} from '@@shared/models/launches-page-data';
+import {LaunchesPage} from '@@shared/models/launches-page';
 import {LaunchesStateModel} from '@@shared/models/launches-state-model';
-import {LaunchesSearchCriteria} from '@@shared/models/launches-search-criteria';
+import {CollectionUtils} from '@@core/utils/collection.utils';
 
 @Component({
   selector: 'app-launch-info-list',
@@ -18,8 +17,10 @@ export class LaunchInfoListComponents implements OnInit, OnDestroy {
 
   private unsubscribe$: Subject<void>;
   public loaded: boolean;
-  public launchesPage: LaunchesPageData;
-  public launchesSearchCriteria: LaunchesSearchCriteria;
+  public launchesPage: LaunchesPage;
+  public thereAreNoAvailableLaunches: boolean;
+
+  @Input() itemsPerPage: number;
 
   constructor(private launchesInfoService: LaunchesInfoService,
               private launchesStateFacade: LaunchesStateFacade,
@@ -28,24 +29,16 @@ export class LaunchInfoListComponents implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.launchesInfoService.fetchFirstUpcomingLaunchesPage$().subscribe();
+    this.launchesInfoService.fetchUpcomingLaunchesPage$().subscribe();
 
     this.launchesStateFacade.state$
       .pipe(filter(s => Boolean(s.launchesPage)), takeUntil(this.unsubscribe$))
       .subscribe((state: LaunchesStateModel) => {
         this.loaded = true;
-        this.launchesSearchCriteria = state.launchesSearchCriteria;
         this.launchesPage = state.launchesPage;
+        this.thereAreNoAvailableLaunches = CollectionUtils.isEmpty(state.launchesPage?.results);
         this.cdr.detectChanges();
       });
-  }
-
-  onPrevPageClick() {
-    this.launchesInfoService.fetchPrevUpcomingLaunchesPage$().subscribe();
-  }
-
-  onNextPageClick() {
-    this.launchesInfoService.fetchNextUpcomingLaunchesPage$().subscribe();
   }
 
   ngOnDestroy(): void {

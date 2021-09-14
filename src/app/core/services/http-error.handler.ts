@@ -1,10 +1,15 @@
 import {HttpError} from '@@shared/models/http-error';
 import {HttpErrorResponse} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import {Injectable, NgZone} from '@angular/core';
 import * as HttpStatus from 'http-status-codes';
+import {ToastrService} from 'ngx-toastr';
 
 @Injectable({providedIn: 'root'})
 export class HttpErrorHandler {
+
+  constructor(private toastrService: ToastrService,
+              private ngZone: NgZone) {
+  }
 
   handleErrorResponse(httpErrorData: HttpError) {
     const response: HttpErrorResponse = httpErrorData.response;
@@ -24,6 +29,15 @@ export class HttpErrorHandler {
       }
       case HttpStatus.NOT_FOUND: {
         console.log('Show page 404');
+        break;
+      }
+      case HttpStatus.TOO_MANY_REQUESTS: {
+        this.ngZone.run(() => {
+          this.toastrService.error(
+            response.error?.detail || '',
+            '[429] TOO MANY REQUESTS'
+          );
+        });
         break;
       }
       default: {

@@ -1,0 +1,14 @@
+@import "abstracts/variables";
+
+// sass-lint:disable no-duplicate-properties
+// sass-lint:disable property-sort-order
+
+@font-face {
+  font-family: "Mandali Regular";
+  src: url("#{$fonts-path}/Mandali-Regular.eot");
+  src: url("#{$fonts-path}/Mandali-Regular.eot?#iefix") format("embedded-opentype"),
+  url("#{$fonts-path}/Mandali-Regular.woff") format("woff"),
+  url("#{$fonts-path}/Mandali-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}

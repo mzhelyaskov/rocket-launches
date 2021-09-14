@@ -1,9 +1,9 @@
 import {HttpCancelService} from '@@core/services/http-cancel.service';
 import {HttpErrorHandler} from '@@core/services/http-error.handler';
-import {CoreStateFacade} from '@@core/store/core-state.facade';
 import {ErrorHandler, Injectable, Injector} from '@angular/core';
 import {InternalError} from '@@shared/models/internal-error';
 import {HttpError} from '@@shared/models/http-error';
+import {UiLockerStoreFacade} from '@@ui-locker/store/ui-locker-store.facade';
 
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
@@ -18,18 +18,20 @@ export class GlobalErrorHandler implements ErrorHandler {
     return this.injector.get(HttpErrorHandler);
   }
 
-  get errorsStoreFacade() {
-    return this.injector.get(CoreStateFacade);
+  get uiLockerStoreFacade() {
+    return this.injector.get(UiLockerStoreFacade);
   }
 
   handleError(error: Error | HttpError) {
     error = GlobalErrorHandler.unwrapFromPromiseIfNeeded(error);
     if (error instanceof HttpError) {
       this.httpCancelService.cancelPendingRequests();
+      this.httpErrorService.handleErrorResponse(error);
     } else {
       const exceptionData = InternalError.of(error);
-      this.errorsStoreFacade.setException(exceptionData);
+      console.error(exceptionData);
     }
+    this.uiLockerStoreFacade.unlockAll();
   }
 
   private static unwrapFromPromiseIfNeeded(error: any) {
