@@ -23,7 +23,6 @@ export class LaunchesInfoService {
     )
   }
 
-  @UiLocking()
   fetchLaunchLocationPage$(url: string): Observable<LaunchLocationsPage> {
     return this.launchesRestService.getNextLaunchLocationsPage$(url).pipe(
       exhaustMap((page: LaunchLocationsPage) => {

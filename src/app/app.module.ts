@@ -19,12 +19,14 @@ import {NgxsReduxDevtoolsPluginModule} from '@ngxs/devtools-plugin';
 import {PaginationWidgetModule} from '@@widgets/pagination/pagination-widget.module';
 import {ToastrModule} from 'ngx-toastr';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {AppUiLockerModule} from '@@ui-locker/ui-locker.module';
 
 @NgModule({
   imports: [
     BrowserModule,
     AppCoreModule,
     AppSharedModule,
+    AppUiLockerModule,
     InputWidgetModule,
     HttpClientModule,
     PaginationWidgetModule,

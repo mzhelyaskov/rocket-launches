@@ -1,21 +1,19 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {LaunchesPageCriteria} from '@@shared/models/launches-page-criteria';
 import {LaunchesInfoService} from '@@app/services/launches-info.service';
 import {LaunchesStateFacade} from '@@app/store/launches-state.facade';
-import {exhaustMap, filter, takeUntil} from 'rxjs/operators';
+import {exhaustMap, filter} from 'rxjs/operators';
 import {LaunchesStateModel} from '@@shared/models/launches-state-model';
 import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  styleUrls: ['app.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['app.component.scss']
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit {
 
-  private unsubscribe$: Subject<void>;
   public control: FormControl;
   public itemsPerPage: number;
   public totalItems: number;
@@ -25,7 +23,6 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(private launchesInfoService: LaunchesInfoService,
               private launchesStateFacade: LaunchesStateFacade,
               private cdr: ChangeDetectorRef) {
-    this.unsubscribe$ = new Subject<void>();
     this.control = new FormControl(null);
     this.currentPageNumber = 1;
     this.itemsPerPage = 10;
@@ -34,7 +31,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.launchesStateFacade.state$
-      .pipe(filter(s => Boolean(s.launchesPage)), takeUntil(this.unsubscribe$))
+      .pipe(filter(s => Boolean(s.launchesPage)))
       .subscribe((state: LaunchesStateModel) => {
         this.loaded = true;
         this.totalItems = state.launchesPage.count;
@@ -55,10 +52,5 @@ export class AppComponent implements OnInit, OnDestroy {
     this.launchesStateFacade.updateLaunchesPageCriteriaParams$(criteria)
       .pipe(exhaustMap(() => this.launchesInfoService.fetchUpcomingLaunchesPage$()))
       .subscribe();
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
   }
 }

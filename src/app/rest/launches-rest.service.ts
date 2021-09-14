@@ -8,6 +8,7 @@ import {Cache} from '@@shared/decorators/cache.decorator';
 import {ApiUrlConfig} from '@@app/config/api-url.config';
 import {HttpUtils} from '@@core/utils/http.utils';
 import {delay} from 'rxjs/operators';
+import {CollectionUtils} from '@@core/utils/collection.utils';
 
 const LOCATIONS_API_REQUEST_DELAY = 1000;
 
@@ -21,7 +22,7 @@ export class LaunchesRestService {
     const params = HttpUtils.createQueryParams({
       offset: criteria?.offset,
       limit: criteria?.limit,
-      location__ids: criteria ? criteria.locationCodes.join(',') : null
+      location__ids: CollectionUtils.isNotEmpty(criteria?.locationCodes) ? criteria.locationCodes.join(',') : null
     });
     return this.http.get<LaunchesPage>(ApiUrlConfig.UPCOMING_LAUNCHES_INITIAL_URL, {params});
   }
