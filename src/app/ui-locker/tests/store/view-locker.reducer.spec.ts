@@ -1,7 +1,6 @@
 import {UiLockerStateModel} from '@@ui-locker/models/ui-locker-state-model';
 import {DecrementPendingRequests, IncrementPendingRequests} from '@@ui-locker/store/ui-locker.action';
-import {initialState, UiLockerState} from '@@ui-locker/store/ui-locker.state';
-import {UI_LOCKER_STATE_TOKEN} from '@@ui-locker/store/ui-store.config';
+import {initialState, UI_LOCKER_STATE_TOKEN, UiLockerState} from '@@ui-locker/store/ui-locker.state';
 import {TestBed} from '@angular/core/testing';
 import {NgxsModule, Store} from '@ngxs/store';
 

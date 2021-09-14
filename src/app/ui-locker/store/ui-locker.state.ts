@@ -1,8 +1,10 @@
 import {UiLockerStateModel} from '@@ui-locker/models/ui-locker-state-model';
 import {DecrementPendingRequests, IncrementPendingRequests, UnlockUi} from '@@ui-locker/store/ui-locker.action';
-import {UI_LOCKER_STATE_TOKEN} from '@@ui-locker/store/ui-store.config';
 import {Injectable} from '@angular/core';
-import {Action, Selector, State, StateContext} from '@ngxs/store';
+import {Action, Selector, State, StateContext, StateToken} from '@ngxs/store';
+
+export const UI_LOCKER_ROOT_KEY = 'uiLocker';
+export const UI_LOCKER_STATE_TOKEN = new StateToken<UiLockerStateModel>(UI_LOCKER_ROOT_KEY);
 
 export const initialState: UiLockerStateModel = {
   pendingRequestsCount: 0,

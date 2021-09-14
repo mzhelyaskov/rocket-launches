@@ -107,7 +107,10 @@
             "styles": [
               "src/scss/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/scss"]
+            }
           }
         }
       }
