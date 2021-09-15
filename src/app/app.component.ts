@@ -5,7 +5,6 @@ import {LaunchesInfoService} from '@@app/services/launches-info.service';
 import {LaunchesStateFacade} from '@@app/store/launches-state.facade';
 import {exhaustMap, filter} from 'rxjs/operators';
 import {LaunchesStateModel} from '@@shared/models/launches-state-model';
-import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-root',

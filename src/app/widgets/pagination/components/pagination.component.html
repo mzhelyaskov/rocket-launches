@@ -1,8 +1,11 @@
 <ul class="pagination">
+  <li *ngIf="hasHiddenPagesOnLeft" class="pagination__hidden-pages-hint">
+    <span>...</span>
+  </li>
   <li *ngFor="let page of pages" [class.active]="page.active" class="pagination__page" (click)="selectPage(page.number, $event)">
     <span>{{page.number}}</span>
   </li>
-  <li *ngIf="pageNumber <= totalPages" class="pagination__page">
+  <li *ngIf="hasHiddenPagesOnRight" class="pagination__hidden-pages-hint">
     <span>...</span>
   </li>
 </ul>

@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, Input, OnInit} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Page} from '@@widgets/pagination/models/page';
+import {CollectionUtils} from '@@widgets/pagination/utils/collection-utils';
 
 @Component({
   selector: 'app-pagination',
@@ -21,6 +22,8 @@ export class PaginationComponent implements ControlValueAccessor, OnInit {
   private _itemsPerPage = 0;
   private _pageNumber = 1;
 
+  public hasHiddenPagesOnRight: boolean;
+  public hasHiddenPagesOnLeft: boolean;
   public totalPages = 0;
   public pages: Page[];
 
@@ -39,8 +42,8 @@ export class PaginationComponent implements ControlValueAccessor, OnInit {
     return this._itemsPerPage;
   }
 
-  set itemsPerPage(v: number) {
-    this._itemsPerPage = v;
+  set itemsPerPage(itemsPerPage: number) {
+    this._itemsPerPage = itemsPerPage;
     this.totalPages = this.calculateTotalPages();
   }
 
@@ -53,6 +56,7 @@ export class PaginationComponent implements ControlValueAccessor, OnInit {
     this._totalItems = totalItems;
     this.totalPages = this.calculateTotalPages();
     this.pages = this.getPages(this.pageNumber, this.totalPages);
+    this.updateHiddenPagesHints();
   }
 
   set pageNumber(pageNumber: number) {
@@ -65,6 +69,7 @@ export class PaginationComponent implements ControlValueAccessor, OnInit {
 
   ngOnInit() {
     this.pages = this.getPages(this.pageNumber, this.totalPages);
+    this.updateHiddenPagesHints();
   }
 
   registerOnChange(fn: any): void {
@@ -79,6 +84,7 @@ export class PaginationComponent implements ControlValueAccessor, OnInit {
     this.pageNumber = pageNumber;
     if (pageNumber) {
       this.pages = this.getPages(this.pageNumber, this.totalPages);
+      this.updateHiddenPagesHints();
       this.cdr.detectChanges();
     }
   }
@@ -105,6 +111,15 @@ export class PaginationComponent implements ControlValueAccessor, OnInit {
       pages.push(page);
     }
     return pages;
+  }
+
+  private updateHiddenPagesHints() {
+    if (CollectionUtils.isNotEmpty(this.pages)) {
+      const firstPage = CollectionUtils.getFirstItem(this.pages);
+      this.hasHiddenPagesOnLeft = firstPage.number > 1;
+      const lastPage = CollectionUtils.getLastItem(this.pages);
+      this.hasHiddenPagesOnRight = lastPage.number < this.totalPages;
+    }
   }
 
   private makePage(num: number, text: string, active: boolean): Page {
