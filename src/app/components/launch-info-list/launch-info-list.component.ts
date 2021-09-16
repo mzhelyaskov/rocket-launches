@@ -22,7 +22,8 @@ export class LaunchInfoListComponents implements OnInit, OnDestroy {
 
   @Input() itemsPerPage: number;
 
-  constructor(private launchesInfoService: LaunchesInfoService,
+  constructor(private window: Window,
+              private launchesInfoService: LaunchesInfoService,
               private launchesStateFacade: LaunchesStateFacade,
               private cdr: ChangeDetectorRef) {
     this.unsubscribe$ = new Subject<void>();
@@ -37,6 +38,7 @@ export class LaunchInfoListComponents implements OnInit, OnDestroy {
         this.loaded = true;
         this.launchesPage = state.launchesPage;
         this.thereAreNoAvailableLaunches = CollectionUtils.isEmpty(state.launchesPage?.results);
+        this.window.scrollTo({top: 0});
         this.cdr.detectChanges();
       });
   }
