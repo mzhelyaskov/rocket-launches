@@ -20,7 +20,7 @@ import {InputPrefixIconDirective} from '@@widgets/input/directives/input-prefix-
 export class InputComponent implements ControlValueAccessor, OnInit, AfterViewInit {
 
   @ViewChild('input') inputElementRef: ElementRef<HTMLInputElement>;
-  @ContentChild('appPrefixIcon') inputPrefixIcon: InputPrefixIconDirective;
+  @ContentChild(InputPrefixIconDirective) inputPrefixIcon: InputPrefixIconDirective;
 
   private _onChange: (value: string) => void;
   private _onTouch: () => void;
@@ -43,7 +43,7 @@ export class InputComponent implements ControlValueAccessor, OnInit, AfterViewIn
     }
   }
 
-  get prefixIcon(): boolean {
+  get prefixIconAvailable(): boolean {
     return Boolean(this.inputPrefixIcon);
   }
 

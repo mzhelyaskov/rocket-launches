@@ -1,4 +1,4 @@
 import {Directive} from '@angular/core';
 
-@Directive({selector: 'appPrefixIcon'})
+@Directive({selector: '[appPrefixIcon]'})
 export class InputPrefixIconDirective {}

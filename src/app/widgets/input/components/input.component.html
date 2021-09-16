@@ -1,11 +1,7 @@
 <div class="control">
-  <ng-container *ngTemplateOutlet="prefixIcon"></ng-container>
+  <div *ngIf="prefixIconAvailable" class="control__prefix-icon">
+    <ng-content select="[appPrefixIcon]"></ng-content>
+  </div>
   <input #input class="control__input" type="text" autocomplete="off"
          [placeholder]="placeholder" [name]="name" (input)="onInput(input.value)"/>
 </div>
-
-<ng-template #prefixIcon>
-  <div class="control__prefix-icon">
-    <ng-content select="[appPrefixIcon]"></ng-content>
-  </div>
-</ng-template>
